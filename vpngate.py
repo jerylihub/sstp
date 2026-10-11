@@ -348,8 +348,8 @@ def build_nodes_text(data):
         code = str(grp.get("code") or "?").upper()
         zh = COUNTRY_ZH.get(code) or (code if code and code != "?" else cname)
         nodes = sorted(grp["nodes"], key=lambda n: (0 if n.get("residential") == "residential" else 1, n.get("latency_ms") is None, n.get("latency_ms") or 0, n.get("host") or ""))
-        res_nodes = [n for n in nodes if n.get("residential"] == "residential"]
-        dc_nodes = [n for n in nodes if n.get("residential"] != "residential"]
+        res_nodes = [n for n in nodes if n.get("residential") == "residential"]
+        dc_nodes = [n for n in nodes if n.get("residential") != "residential"]
         
         for i, n in enumerate(res_nodes, 1):
             lines.append(f"{zh}-住宅-{i:02d}#sstp://vpn:vpn@{n['ip']}:{n['port']}")
