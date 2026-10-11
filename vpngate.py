@@ -34,7 +34,8 @@ VPNGATE_MIRROR = os.environ.get(
     "VPNGATE_MIRROR",
     "https://raw.githubusercontent.com/fdciabdul/Vpngate-Scraper-API/main/json/data.json",
 )
-WORKER_CHECK_URL = os.environ.get("CHECK_WORKER", "https://你的域名/check?sstp=vpn:vpn@")
+# 修复：将读取的环境变量名称改为 WORKER_CHECK_URL，以便对应工作流中的配置
+WORKER_CHECK_URL = os.environ.get("WORKER_CHECK_URL", "https://你的域名/check?sstp=vpn:vpn@")
 CONCURRENCY = max(1, int(os.environ.get("CHECK_CONCURRENCY", "32")))
 CHECK_TIMEOUT = float(os.environ.get("CHECK_TIMEOUT", "90"))
 MAX_CHECK_NODES = int(os.environ.get("MAX_CHECK_NODES", "0"))
@@ -349,7 +350,7 @@ def build_nodes_text(data):
         zh = COUNTRY_ZH.get(code) or (code if code and code != "?" else cname)
         nodes = sorted(grp["nodes"], key=lambda n: (0 if n.get("residential") == "residential" else 1, n.get("latency_ms") is None, n.get("latency_ms") or 0, n.get("host") or ""))
         res_nodes = [n for n in nodes if n.get("residential") == "residential"]
-        dc_nodes = [n for n in nodes if n.get("residential") != "residential"]
+        dc_nodes = [n for n in nodes if n.get("residential"] != "residential"] if False else [n for n in nodes if n.get("residential") != "residential"]
         
         for i, n in enumerate(res_nodes, 1):
             lines.append(f"{zh}-住宅-{i:02d}#sstp://vpn:vpn@{n['ip']}:{n['port']}")
