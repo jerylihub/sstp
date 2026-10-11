@@ -31,7 +31,7 @@ jobs:
       - name: Get VPN Gate nodes + check via Worker + build page
         run: python vpngate.py
         env:
-          CHECK_WORKER: "https://你的域名/check?sstp=vpn:vpn@"
+          WORKER_CHECK_URL: ${{ secrets.DOMAIN }}"
           CHECK_CONCURRENCY: "32"
           CHECK_TIMEOUT: "90"
 
